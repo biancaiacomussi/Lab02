@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 public class AlienController {
 	
 	private HashMap <String, String> parole =  new HashMap<String,String>();
+	private AlienDictionary dizionario = new AlienDictionary();
 
     @FXML
     private ResourceBundle resources;
@@ -37,42 +38,39 @@ public class AlienController {
 
     @FXML
     void doReset(ActionEvent event) {
-
+    	txtMessaggi.clear();
     }
 
     @FXML
     void doTranslate(ActionEvent event) {
-
-    	//this.txtMessaggi.clear();
-    	String parola = this.txtWord.getText();
-    	String traduzione;
-    	String [] parts = parola.trim().split(" ");
+    	String [] parola = txtWord.getText().split(" ");
+    	if(parola.length==2) {
+    		if(!parola[0].matches("[a-zA-Z]+") || !parola[1].matches("[a-zA-Z]+")) {
+    			txtMessaggi.appendText("Devi inserire una parola\n");
+    			throw new InvalidParameterException("Devi inserire una parola\n");
+    		}
+    		
+    		dizionario.add(parola[0],parola[1]);
+    		txtMessaggi.appendText("Inserita nuova parola\n");
+    	}
     	
-    	  	
-    	if(parts.length==2) { //memorizzo la parola
+    	if(parola.length==1) {
+    		if(!parola[0].matches("[a-zA-Z]+")) {
+    			txtMessaggi.appendText("Devi inserire una parola\n");
+    			throw new InvalidParameterException("Devi inserire una parola\n");
+    		}
     		
-    		if(!parts[0].matches("[a-zA-Z]+") || !parts[1].matches("[a-zA-Z]+")) {
-    			txtMessaggi.appendText("Devi inserire una parola!\n");
-    			throw new InvalidParameterException("Devi inserire una parola!\n");
-    		}
-    		parole.put(parts[0].toLowerCase(), parts[1].toLowerCase());
-    		txtMessaggi.appendText("Inserita nuova parola al dizionario\n");
-    	}
-  
-    	else if(parts.length==1) {
+    		String s = dizionario.translate(parola[0]);
     		
-    		if(!parts[0].matches("[a-zA-Z]+")) {
-    			txtMessaggi.appendText("Devi inserire una parola!\n");
-    			throw new InvalidParameterException("Devi inserire una parola!\n");
-    		}
-    		traduzione = parole.get(parola.toLowerCase());
-    		if(traduzione == null) {
-    			txtMessaggi.appendText("Parola non presente.\n");
-    		} else {
-    			txtMessaggi.appendText(parola+ " significa "+traduzione+"\n");
-    		}
+    		if(s!=null)
+    		txtMessaggi.appendText(parola[0]+" vuol dire "+dizionario.translate(parola[0]+"\n"));
+
+    		if(s==null)
+    			txtMessaggi.appendText("Parola non presente\n");
     	}
+    	
     	txtWord.clear();
+    	
     }
 
     @FXML

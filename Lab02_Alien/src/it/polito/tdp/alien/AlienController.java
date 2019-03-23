@@ -60,10 +60,10 @@ public class AlienController {
     			throw new InvalidParameterException("Devi inserire una parola\n");
     		}
     		
-    		String s = dizionario.translate(parola[0]);
+    		String s = dizionario.translate(parola[0],dizionario);
     		
     		if(s!=null)
-    		txtMessaggi.appendText(parola[0]+" vuol dire "+dizionario.translate(parola[0]+"\n"));
+    		txtMessaggi.appendText(parola[0]+" vuol dire "+dizionario.translate(parola[0],dizionario)+"\n");
 
     		if(s==null)
     			txtMessaggi.appendText("Parola non presente\n");
@@ -71,9 +71,20 @@ public class AlienController {
     	
     	txtWord.clear();
     	
+    	
+    		System.out.println(dizionario.getDizionario().toString());
+    	
+    	
+    	
     }
 
-    @FXML
+    
+    
+    public AlienDictionary getDizionario() {
+		return dizionario;
+	}
+
+	@FXML
     void initialize() {
         assert txtWord != null : "fx:id=\"txtWord\" was not injected: check your FXML file 'Alien.fxml'.";
         assert btnTranslate != null : "fx:id=\"btnTranslate\" was not injected: check your FXML file 'Alien.fxml'.";

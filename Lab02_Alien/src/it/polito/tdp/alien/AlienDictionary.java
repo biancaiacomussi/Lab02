@@ -1,8 +1,8 @@
 package it.polito.tdp.alien;
 
-import java.awt.List;
+
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.Map;
 
 public class AlienDictionary {
@@ -24,26 +24,33 @@ public class AlienDictionary {
 			
 		w=dizionario.get(alienWord);
 		
-				for(String t : dizionario.get(alienWord).getTraduzioni()) {
-					if(translation.equals(t)==false) { //se devo aggiungere una traduzione
-						
+				//for(String t : dizionario.get(alienWord).getTraduzioni()) {
+				//	if(translation.equals(t)==false) { //se devo aggiungere una traduzione
+					if(!w.getTraduzioni().contains(translation))
 						w.add(translation);
-					}
-				}
+					//}
+				//}
 				
 			}
 		
 	
 
-	public String translate(String alienWord) {
+	public Map<String, WordEnhanced> getDizionario() {
+		return dizionario;
+	}
+
+	
+	public String translate(String alienWord, AlienDictionary diz) {
 		
-		String risultato=null;
-		WordEnhanced w=dizionario.get(alienWord);
+		String risultato="";
+		WordEnhanced w=diz.getDizionario().get(alienWord);
+		System.out.println(w);
+		System.out.println(w.getTraduzioni());
 		
 		if(w!=null) {
 		for(String s: w.getTraduzioni()) {
-			risultato += s+"\n";
-		}return risultato;
+			risultato += s+", ";
+		}return risultato.substring(0, risultato.length()-2)+".";
 		
 		}else return null;
 		

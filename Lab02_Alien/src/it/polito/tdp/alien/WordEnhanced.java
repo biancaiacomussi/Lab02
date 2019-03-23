@@ -6,7 +6,7 @@ import java.util.List;
 public class WordEnhanced {
 
 	private String alienWord;
-	private LinkedList<String> traduzioni;
+	private List<String> traduzioni;
 	
 	
 	public WordEnhanced(String alienWord) {
@@ -25,7 +25,7 @@ public class WordEnhanced {
 	}
 
 
-	public LinkedList<String> getTraduzioni() {
+	public List<String> getTraduzioni() {
 		return traduzioni;
 	}
 	
